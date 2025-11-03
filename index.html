@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Date Counter</title>
   <style>
-    /* 🌌 Background and layout */
     body {
       margin: 0;
       height: 100vh;
@@ -78,6 +77,10 @@
 
   <div class="glass-box">
     <div class="time-box">
+      <div class="number" id="months">0</div>
+      <div class="label">Months</div>
+    </div>
+    <div class="time-box">
       <div class="number" id="days">0</div>
       <div class="label">Days</div>
     </div>
@@ -104,13 +107,38 @@
 
     function updateCounter() {
       const now = new Date();
-      const diff = now - startDate;
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      // Calculate months and days
+      let months = (now.getFullYear() - startDate.getFullYear()) * 12;
+      months += now.getMonth() - startDate.getMonth();
+      let days = now.getDate() - startDate.getDate();
+      if (days < 0) {
+        months -= 1;
+        // Get days in previous month
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
 
+      // Calculate hours, minutes, seconds
+      let hours = now.getHours() - startDate.getHours();
+      if (hours < 0) {
+        hours += 24;
+        days -= 1;
+      }
+
+      let minutes = now.getMinutes() - startDate.getMinutes();
+      if (minutes < 0) {
+        minutes += 60;
+        hours -= 1;
+      }
+
+      let seconds = now.getSeconds() - startDate.getSeconds();
+      if (seconds < 0) {
+        seconds += 60;
+        minutes -= 1;
+      }
+
+      document.getElementById("months").textContent = months;
       document.getElementById("days").textContent = days;
       document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
       document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
