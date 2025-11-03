@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Date Counter</title>
+  <style>
+    /* 🌌 Background and layout */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #001f3f, #000);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #00fff2;
+      text-shadow: 0 0 15px #00fff2;
+      margin-bottom: 25px;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      padding: 40px 60px;
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .glass-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+    }
+
+    .time-box {
+      text-align: center;
+      min-width: 100px;
+    }
+
+    .number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00fff2;
+      text-shadow: 0 0 15px #00fff2;
+    }
+
+    .label {
+      font-size: 0.9rem;
+      color: #bdfaff;
+      margin-top: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #d0faff;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Time Since 10 August 2025 - 11:00 PM</h1>
+
+  <div class="glass-box">
+    <div class="time-box">
+      <div class="number" id="days">0</div>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="hours">0</div>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="minutes">0</div>
+      <div class="label">Minutes</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="seconds">0</div>
+      <div class="label">Seconds</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ⏱ Counting from <b>10 August 2025, 11:00 PM</b>
+  </div>
+
+  <script>
+    const startDate = new Date("August 10, 2025 23:00:00");
+
+    function updateCounter() {
+      const now = new Date();
+      const diff = now - startDate;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+      document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+      document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000);
+  </script>
+
+</body>
+</html>
